@@ -33,6 +33,7 @@ namespace Emp37.Utility
             private static readonly Color32 cyan = new(0, 255, 255, MaxValue);
             private static readonly Color32 dandelion = new(240, 225, 48, MaxValue);
             private static readonly Color32 darkGrey = new(90, 90, 90, MaxValue);
+            private static readonly Color32 editorText = new(185, 185, 185, MaxValue);
             private static readonly Color32 eggplant = new(97, 64, 81, MaxValue);
             private static readonly Color32 emerald = new(80, 200, 120, MaxValue);
             private static readonly Color32 forest = new(34, 139, 34, MaxValue);
@@ -106,6 +107,7 @@ namespace Emp37.Utility
                   Cyan => cyan,
                   Dandelion => dandelion,
                   DarkGrey => darkGrey,
+                  EditorText => editorText,
                   Eggplant => eggplant,
                   Emerald => emerald,
                   Forest => forest,

@@ -11,9 +11,10 @@ namespace Emp37.Utility
       public class ButtonAttribute : PropertyAttribute
       {
             public readonly string Text;
-            public readonly int Size = 21;
+
+            // size
+            // show only at runtime functionality
 
             public ButtonAttribute(string text) => Text = text;
-            public ButtonAttribute(string text, int size) : this(text) => Size = Mathf.Clamp(value: size, min: 18, max: 48);
       }
 }

@@ -11,7 +11,7 @@ namespace Emp37.Utility.Editor
             {
                   var attribute = base.attribute as ReadonlyAttribute;
 
-                  GUI.enabled = !attribute.ExclusiveToPlaymode || EditorApplication.isPlaying;
+                  GUI.enabled = attribute.ExclusiveToPlaymode && !EditorApplication.isPlaying;
                   EditorGUI.PropertyField(position, property, label, true);
                   GUI.enabled = true;
             }

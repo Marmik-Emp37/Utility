@@ -68,6 +68,8 @@ namespace Emp37.Utility
 
             DarkGrey,
 
+            EditorText,
+
             Eggplant,
 
             Emerald,

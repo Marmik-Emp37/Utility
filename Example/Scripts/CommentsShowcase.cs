@@ -2,11 +2,11 @@ using UnityEngine;
 
 using Emp37.Utility;
 
-public class CommentExamples : MonoBehaviour
+public class CommentsShowcase : MonoBehaviour
 {
       [Comment("This is a basic comment.")]
-      [Comment("This is a tinted comment.", Shades.Icterine)]
-      [Comment("This is a stylized & tinted comment.", Shades.White, FontStyle.BoldAndItalic)]
+      [Comment("This is a rich & <color=#FCF75E>tinted</color> comment.", Shades.Icterine)]
+      [Comment("This is a rich, stylized & <color=#FFFFFF>tinted</color> comment.", Shades.White, FontStyle.BoldAndItalic)]
       [Readonly] public bool AllowMultiple = true;
 
       [Space(15F)]

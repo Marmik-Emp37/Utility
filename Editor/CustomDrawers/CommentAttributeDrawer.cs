@@ -7,12 +7,12 @@ namespace Emp37.Utility.Editor
       [CustomPropertyDrawer(typeof(CommentAttribute))]
       internal class CommentAttributeDrawer : PropertyDrawer
       {
-            private CommentAttribute Attribute => attribute as CommentAttribute;
+            private const byte backgroundAlpha = 25;
+            private const float minHeight = 21F, blockWidth = 3F;
 
             private readonly GUIStyle style = new(EditorStyles.label) { richText = true, wordWrap = true };
 
-            private const float minHeight = 21F, blockWidth = 3F;
-            private const byte backgroundAlpha = 25;
+            private CommentAttribute Attribute => attribute as CommentAttribute;
 
 
             public override void Initialize(SerializedProperty property)
@@ -22,7 +22,7 @@ namespace Emp37.Utility.Editor
             public override void OnPropertyDraw(Rect position, SerializedProperty property, GUIContent label)
             {
                   var commentArea = position;
-                  commentArea.size = new(x: EditorGUIHelper.ReleventWidth, y: GetStyleHeight(Attribute.Content) /*- [ 1 ]*/);
+                  commentArea.size = new(x: EditorGUIHelper.ReleventWidth, y: GetStyleHeight(Attribute.Content) /* - [ 1 ]*/);
                   EditorGUI.LabelField(commentArea, Attribute.Content, style);
 
                   EditorGUI.DrawRect(commentArea, Attribute.Tint.WithAlpha(backgroundAlpha));
@@ -37,7 +37,7 @@ namespace Emp37.Utility.Editor
             }
             public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
             {
-                  var height = base.GetPropertyHeight(property, label);
+                  float height = base.GetPropertyHeight(property, label);
                   height += GetStyleHeight(Attribute.Content) + EditorGUIUtility.standardVerticalSpacing; // - [ 1 ] + [ 2 ]
                   return height;
             }

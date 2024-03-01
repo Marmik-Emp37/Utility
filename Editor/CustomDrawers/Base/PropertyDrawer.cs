@@ -1,13 +1,12 @@
 using UnityEngine;
 
 using UnityEditor;
-using System;
 
 namespace Emp37.Utility.Editor
 {
-      public abstract class PropertyDrawer : UnityEditor.PropertyDrawer
+      internal abstract class PropertyDrawer : UnityEditor.PropertyDrawer
       {
-            private bool init = false;
+            private bool init;
 
             public virtual void Initialize(SerializedProperty property) { }
             public abstract void OnPropertyDraw(Rect position, SerializedProperty property, GUIContent label);
