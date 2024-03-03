@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
+
+using UnityEngine;
 
 using UnityEditor;
 
@@ -7,32 +10,35 @@ namespace Emp37.Utility.Editor
 {
       internal class Emp37Editor : UnityEditor.Editor
       {
-            private SerializedProperty defaultProperty;
-            private bool shouldHideDefaultScript;
+            private SerializedProperty[] properties = null;
 
-            private SerializedProperty[] properties;
+            private bool hideDefaultField;
+            private const string defaultFieldIdentifier = "m_Script";
+
+            private Type type;
+
 
             private void OnEnable()
             {
-                  var type = target.GetType();
-                  shouldHideDefaultScript = type.IsDefined(typeof(HideDefaultScriptAttribute));
+                  type = target.GetType();
+
+                  hideDefaultField = type.IsDefined(typeof(HideDefaultScriptAttribute));
 
                   #region F E T C H I N G   P R O P E R T I E S
-                  var properties = new List<SerializedProperty>();
-                  var iterator = serializedObject.GetIterator();
-                  while (iterator.NextVisible(true))
+                  if (properties == null)
                   {
-                        var property = serializedObject.FindProperty(iterator.name);
-
-                        if (property == null) continue;
-                        if (property.name == "m_Script")
+                        var properties = new List<SerializedProperty>();
+                        var iterator = serializedObject.GetIterator();
+                        while (iterator.NextVisible(true))
                         {
-                              defaultProperty = property;
-                              continue;
+                              var property = serializedObject.FindProperty(iterator.name);
+                              if (property != null)
+                              {
+                                    properties.Add(property);
+                              }
                         }
-                        properties.Add(property);
+                        this.properties = properties.ToArray();
                   }
-                  this.properties = properties.ToArray();
                   #endregion
             }
 
@@ -40,22 +46,34 @@ namespace Emp37.Utility.Editor
             {
                   serializedObject.Update();
                   {
-                        #region D E F A U L T   S C R I P T   F I E L D
-                        if (!shouldHideDefaultScript)
-                        {
-                              using (new EditorGUI.DisabledScope(true))
-                              {
-                                    EditorGUILayout.PropertyField(defaultProperty, false);
-                              }
-                        }
-                        #endregion
-
                         foreach (var property in properties)
                         {
-                              EditorGUILayout.PropertyField(property);
+                              if (EvaluateVisibility(property))
+                              {
+                                    GUI.enabled = EvaluateEnabled(property);
+                                    EditorGUILayout.PropertyField(property);
+                              }
                         }
                   }
                   serializedObject.ApplyModifiedProperties();
+            }
+
+
+            private bool EvaluateEnabled(SerializedProperty property)
+            {
+                  if (property.name is defaultFieldIdentifier)
+                  {
+                        return hideDefaultField;
+                  }
+                  return true;
+            }
+            private bool EvaluateVisibility(SerializedProperty property)
+            {
+                  if (property.name is defaultFieldIdentifier)
+                  {
+                        return !hideDefaultField;
+                  }
+                  return true;
             }
       }
 }

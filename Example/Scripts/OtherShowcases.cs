@@ -15,9 +15,9 @@ public class OtherShowcases : MonoBehaviour
       [SerializeField, Indent(1), Label("Side")] private float side_1 = 4;
       [SerializeField, Indent(1), Label("Side")] private float side_2 = 1;
 
-      [Space(15F)]
+      [Separator(Shades.White, 1)]
 
-      [Title("Example Title", Shades.Emerald)]
+      [Title("Example Title", Shades.Azure, Stretch = false)]
       public Color32 Picker;
 
 

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 69314903}
   - component: {fileID: 69314904}
   - component: {fileID: 69314905}
+  - component: {fileID: 69314906}
   m_Layer: 0
   m_Name: Showcase
   m_TagString: Untagged
@@ -186,12 +187,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   X: 25
   ExpandableObject: {fileID: 11400000, guid: 02cfd0d39942114439eea6aa8bd54715, type: 2}
-  Hypotenuse: 17
-  side_1: 4
+  Hypotenuse: 18.5561
+  side_1: 4.19
   side_2: 1
   Picker:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &69314906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69314901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e78cd71908dc254594aea474b9b91ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Condition: 0
+  ShowWhenCondition: []
+  HideWhenCondition: []
+  <X>k__BackingField: 0
+  LY: 0
 --- !u!1 &820553147
 GameObject:
   m_ObjectHideFlags: 0

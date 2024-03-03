@@ -10,7 +10,7 @@ namespace Emp37.Utility.Editor
       [CustomPropertyDrawer(typeof(TitleAttribute))]
       internal class TitleAttributeDrawer : DecoratorDrawer
       {
-            private const float UnderlineHeight = 3F;
+            private const float InitialGap = 8F, UnderlineHeight = 1F;
 
             private readonly GUIStyle style = new(EditorStyles.boldLabel)
             {
@@ -35,19 +35,21 @@ namespace Emp37.Utility.Editor
             public override void OnGUI(Rect position)
             {
                   base.OnGUI(position);
+
+                  position.y += InitialGap; // - [ 1 ]
                   position.height = size.y;
 
                   style.normal.textColor = Pick(Attribute.Text);
                   EditorGUI.LabelField(position, Attribute.Content, style);
 
-                  position.y += position.height + EditorGUIUtility.standardVerticalSpacing; // - [ 1 ]
+                  position.y += position.height + EditorGUIUtility.standardVerticalSpacing; // - [ 2 ]
                   if (!Attribute.Stretch)
                   {
                         position.width = size.x;
                   }
-                  position.height = UnderlineHeight; // - [ 2 ]
+                  position.height = UnderlineHeight; // - [ 3 ]
                   EditorGUI.DrawRect(position, Pick(Attribute.Underline));
             }
-            public override float GetHeight() => size.y + 2F * EditorGUIUtility.standardVerticalSpacing /* - [ 1 ] + extra spacing*/ + UnderlineHeight /* - [ 2 ]*/;
+            public override float GetHeight() => InitialGap /* - [ 1 ]*/ + size.y + 2F * EditorGUIUtility.standardVerticalSpacing /* - [ 2 ] + extra spacing*/ + UnderlineHeight /* - [ 3 ]*/;
       }
 }
