@@ -25,14 +25,13 @@ namespace Emp37.Utility.Editor
                   }
                   return null;
             }
-#pragma warning disable UNT0007 // Null coalescing on Unity objects
             public static TAttribute GetAttribute<TAttribute>(this SerializedProperty property) where TAttribute : Attribute
             {
                   if (property == null) throw new ArgumentNullException();
                   var target = property.serializedObject.targetObject ?? throw new ArgumentException($"The type of the type object for the serialized property of name '{property.name}' is null.");
-                  return ReflectionUtility.FetchMember(property.name, target)?.GetCustomAttribute<TAttribute>();
+
+                  return ReflectionUtility.FetchMember(property.name, target.GetType())?.GetCustomAttribute<TAttribute>(true);
             }
-#pragma warning restore UNT0007
             public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, out TAttribute attribute) where TAttribute : Attribute
             {
                   attribute = GetAttribute<TAttribute>(property);

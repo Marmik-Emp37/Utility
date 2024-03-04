@@ -10,7 +10,7 @@ namespace Emp37.Utility
       {
             public readonly string Name;
 
-            /// <param name="condition">The name of the boolean (field or property) member type on this object.</param>
-            public HideWhenAttribute(string name) => Name = name;
+            /// <param name="condition">The name of the boolean member type as (field, property or method) on this target.</param>
+            public HideWhenAttribute(string condition) => Name = condition;
       }
 }

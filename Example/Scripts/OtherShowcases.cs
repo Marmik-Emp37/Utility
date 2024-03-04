@@ -5,7 +5,7 @@ using Emp37.Utility;
 public class OtherShowcases : MonoBehaviour
 {
       [Tooltip("Attribute defined as: [Max(25F)]")]
-      [Max(25F)] public int X;
+      [Max(25F)] public int Max;
 
       [ExpandableObject]
       public ExampleObject ExpandableObject;

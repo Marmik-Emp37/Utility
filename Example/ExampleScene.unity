@@ -185,11 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da15c330b60b068448e1269a759c5a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  X: 25
+  Max: 0
   ExpandableObject: {fileID: 11400000, guid: 02cfd0d39942114439eea6aa8bd54715, type: 2}
-  Hypotenuse: 18.5561
-  side_1: 4.19
-  side_2: 1
+  Hypotenuse: 24.3725
+  side_1: 4.66
+  side_2: 1.63
   Picker:
     serializedVersion: 2
     rgba: 4294967295
@@ -205,11 +205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e78cd71908dc254594aea474b9b91ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Condition: 0
-  ShowWhenCondition: []
-  HideWhenCondition: []
-  <X>k__BackingField: 0
-  LY: 0
+  showWhen: 0
+  A: []
+  hideWhen: 0
+  B: 
+  Message1: Is enabled when both boolean above are true.
+  Message2: Is enabled when both boolean above are false.
 --- !u!1 &820553147
 GameObject:
   m_ObjectHideFlags: 0

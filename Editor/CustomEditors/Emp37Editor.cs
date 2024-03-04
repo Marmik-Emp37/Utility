@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEngine;
 
 using UnityEditor;
+using UnityEngine.UIElements;
 
 namespace Emp37.Utility.Editor
 {
@@ -16,6 +17,7 @@ namespace Emp37.Utility.Editor
             private const string defaultFieldIdentifier = "m_Script";
 
             private Type type;
+
 
 
             private void OnEnable()
@@ -58,20 +60,35 @@ namespace Emp37.Utility.Editor
                   serializedObject.ApplyModifiedProperties();
             }
 
-
             private bool EvaluateEnabled(SerializedProperty property)
             {
-                  if (property.name is defaultFieldIdentifier)
+                  if (property.name == defaultFieldIdentifier)
                   {
                         return hideDefaultField;
+                  }
+                  if (property.TryGetAttribute<EnableWhenAttribute>(out var enable))
+                  {
+                        return ReflectionUtility.GetBoolean(enable.Name, target);
+                  }
+                  if (property.TryGetAttribute<DisableWhenAttribute>(out var disable))
+                  {
+                        return !ReflectionUtility.GetBoolean(disable.Name, target);
                   }
                   return true;
             }
             private bool EvaluateVisibility(SerializedProperty property)
             {
-                  if (property.name is defaultFieldIdentifier)
+                  if (property.name == defaultFieldIdentifier)
                   {
                         return !hideDefaultField;
+                  }
+                  if (property.TryGetAttribute<ShowWhenAttribute>(out var show))
+                  {
+                        return ReflectionUtility.GetBoolean(show.Name, target);
+                  }
+                  if (property.TryGetAttribute<HideWhenAttribute>(out var hide))
+                  {
+                        return !ReflectionUtility.GetBoolean(hide.Name, target);
                   }
                   return true;
             }
