@@ -5,37 +5,43 @@ using UnityEditor;
 
 namespace Emp37.Utility.Editor
 {
+      using static ReflectionUtility;
+
+
       public static class SerializedPropertyExtensions
       {
-            public static bool IsArrayElement(this SerializedProperty property) => property.propertyPath.Contains(".Array.data");
-            public static SerializedProperty FindParentProperty(this SerializedProperty property)
+            public static TAttribute GetAttribute<TAttribute>(this SerializedProperty property, BindingFlags bindings = DEFAULT_FLAGS) where TAttribute : Attribute
             {
-                  if (property != null)
+                  if (property == null) throw new ArgumentNullException(nameof(property), "SerializedProperty cannot be null.");
+                  var type = property.serializedObject.targetObject.GetType() ?? throw new ArgumentException($"Target targetType of property '{property.name}' is null or the serialized object is not set.");
+
+                  return FetchFieldInfo(property.name, type, bindings)?.GetCustomAttribute<TAttribute>();
+            }
+            public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, out TAttribute attribute, BindingFlags bindings = DEFAULT_FLAGS) where TAttribute : Attribute
+            {
+                  attribute = default;
+                  try
                   {
-                        var path = property.propertyPath;
-                        if (path.Contains('.'))
+                        attribute = GetAttribute<TAttribute>(property, bindings);
+                        return attribute != null;
+                  }
+                  catch (ArgumentException)
+                  {
+                        return false;
+                  }
+            }
+            public static bool HasAttribute<TAttribute>(this SerializedProperty property, BindingFlags bindings = DEFAULT_FLAGS) where TAttribute : Attribute
+            {
+                  var type = property.serializedObject.targetObject.GetType();
+                  if (type != null)
+                  {
+                        var field = FetchFieldInfo(property.name, type, bindings);
+                        if (field != null)
                         {
-                              var names = path.Split('.');
-                              for (int i = names.Length - 2; i >= 0; i--)
-                              {
-                                    if (names[i] != "Array")
-                                          return property.serializedObject.FindProperty(names[i]);
-                              }
+                              return field.IsDefined(typeof(TAttribute));
                         }
                   }
-                  return null;
-            }
-            public static TAttribute GetAttribute<TAttribute>(this SerializedProperty property) where TAttribute : Attribute
-            {
-                  if (property == null) throw new ArgumentNullException();
-                  var target = property.serializedObject.targetObject ?? throw new ArgumentException($"The type of the type object for the serialized property of name '{property.name}' is null.");
-
-                  return ReflectionUtility.FetchMember(property.name, target.GetType())?.GetCustomAttribute<TAttribute>(true);
-            }
-            public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, out TAttribute attribute) where TAttribute : Attribute
-            {
-                  attribute = GetAttribute<TAttribute>(property);
-                  return attribute != null;
+                  return false;
             }
       }
 }

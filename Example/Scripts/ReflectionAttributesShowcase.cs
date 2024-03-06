@@ -23,4 +23,8 @@ public class ReflectionAttributesShowcase : MonoBehaviour
       [DisableWhen(nameof(whenNone))]
       public string Message2 = "Is enabled when both boolean above are false.";
       private bool whenNone => showWhen || hideWhen;
+
+
+      public bool X;
+      public bool Y;
 }

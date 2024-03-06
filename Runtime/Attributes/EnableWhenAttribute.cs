@@ -8,11 +8,11 @@ namespace Emp37.Utility
       /// Attribute to conditionally enable the associated field in the Inspector.
       /// </summary>
       [AttributeUsage(AttributeTargets.Field)]
-      public class EnableWhenAttribute : PropertyAttribute
+      public class EnableWhenAttribute : Attribute
       {
-            public readonly string Name;
+            public readonly string ConditionName;
 
             /// <param name="condition">The name of the boolean member type as (field, property or method) on this target.</param>
-            public EnableWhenAttribute(string condition) => Name = condition;
+            public EnableWhenAttribute(string condition) => ConditionName = condition;
       }
 }

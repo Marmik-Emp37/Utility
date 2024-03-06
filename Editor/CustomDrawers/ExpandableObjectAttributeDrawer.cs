@@ -19,7 +19,7 @@ namespace Emp37.Utility.Editor
 #if UNITY_2022_1_OR_NEWER
                   if (property.propertyType != SerializedPropertyType.ObjectReference)
                   {
-                        EditorGUI.HelpBox(position, "Use ExpandableObject attribute on property of type 'Object Reference'.", MessageType.Error);
+                        EditorGUI.HelpBox(position, "Use ExpandableObject attribute on property of targetType 'Object Reference'.", MessageType.Error);
                         return;
                   }
                   EditorGUI.PropertyField(position, property, label);

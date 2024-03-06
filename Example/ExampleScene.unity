@@ -211,6 +211,8 @@ MonoBehaviour:
   B: 
   Message1: Is enabled when both boolean above are true.
   Message2: Is enabled when both boolean above are false.
+  X: 0
+  Y: 0
 --- !u!1 &820553147
 GameObject:
   m_ObjectHideFlags: 0

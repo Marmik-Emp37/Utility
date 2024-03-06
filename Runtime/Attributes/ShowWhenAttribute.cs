@@ -8,9 +8,9 @@ namespace Emp37.Utility
       [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
       public class ShowWhenAttribute : Attribute
       {
-            public readonly string Name;
+            public readonly string ConditionName;
 
             /// <param name="condition">The name of the boolean member type as (field, property or method) on this target.</param>
-            public ShowWhenAttribute(string condition) => Name = condition;
+            public ShowWhenAttribute(string condition) => ConditionName = condition;
       }
 }
