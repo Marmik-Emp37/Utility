@@ -11,7 +11,7 @@ namespace Emp37.Utility.Editor
             {
                   if (property.propertyType is not (SerializedPropertyType.Float or SerializedPropertyType.Integer or SerializedPropertyType.Vector2 or SerializedPropertyType.Vector3 or SerializedPropertyType.Vector2Int or SerializedPropertyType.Vector3Int))
                   {
-                        EditorGUI.HelpBox(position, "Use MaxAttribute on 'Floating' or 'Integer' field types.", MessageType.Error);
+                        EditorGUI.HelpBox(position, "Use MaxAttribute on 'Floating' or 'Integer' field types.", UnityEditor.MessageType.Error);
                         return;
                   }
                   EditorGUI.BeginChangeCheck();

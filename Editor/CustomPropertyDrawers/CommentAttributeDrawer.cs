@@ -33,7 +33,7 @@ namespace Emp37.Utility.Editor
 
                   position.y += commentArea.height + EditorGUIUtility.standardVerticalSpacing; // - [ 2 ]
                   position.height = EditorGUI.GetPropertyHeight(property);
-                  EditorGUI.PropertyField(position, property, label);
+                  EditorGUI.PropertyField(position, property, label, true);
             }
             public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
             {
