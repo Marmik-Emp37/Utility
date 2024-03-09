@@ -7,9 +7,16 @@ namespace Emp37.Utility.Editor
 {
       using static ReflectionUtility;
 
-
       public static class SerializedPropertyExtensions
       {
+            /// <summary>
+            /// Retrieves the attribute of type <typeparamref name="TAttribute"/> associated with a serialized property.
+            /// </summary>
+            /// <param name="property">The serialized property to inspect.</param>
+            /// <param name="bindings">Binding flags for fetching the field information.</param>
+            /// <returns>Attribute of type TAttribute if found, otherwise null.</returns>
+            /// <exception cref="ArgumentNullException">When the serialized property is null.</exception>
+            /// <exception cref="ArgumentException">When the serialized property target object type is null.</exception>
             public static TAttribute GetAttribute<TAttribute>(this SerializedProperty property, BindingFlags bindings = DEFAULT_FLAGS) where TAttribute : Attribute
             {
                   if (property == null) throw new ArgumentNullException(nameof(property), "SerializedProperty cannot be null.");
