@@ -9,8 +9,10 @@ namespace Emp37.Utility
       {
             public readonly string Message;
             public readonly MessageType MessageType;
+            public readonly float Height = 37F;
 
             public HelpBoxAttribute(string message) => Message = message;
             public HelpBoxAttribute(string message, MessageType type) : this(message) => MessageType = type;
+            public HelpBoxAttribute(string message, MessageType type, Size size) : this(message, type) => Height = size switch { Size.Small => 32F, Size.Large => 64F, _ => 48F };
       }
 }

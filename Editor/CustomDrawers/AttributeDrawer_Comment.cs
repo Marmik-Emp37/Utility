@@ -5,10 +5,10 @@ using UnityEditor;
 namespace Emp37.Utility.Editor
 {
       [CustomPropertyDrawer(typeof(CommentAttribute))]
-      internal class CommentAttributeDrawer : PropertyDrawer
+      internal class AttributeDrawer_Comment : BasePropertyDrawer
       {
-            private const byte backgroundAlpha = 25;
-            private const float minHeight = 21F, blockWidth = 3F;
+            private const byte BackgroundAlpha = 25;
+            private const float MinHeight = 21F, BlockWidth = 3F;
 
             private readonly GUIStyle style = new(EditorStyles.label) { richText = true, wordWrap = true };
 
@@ -25,9 +25,9 @@ namespace Emp37.Utility.Editor
                   commentArea.size = new(x: EditorGUIHelper.ReleventWidth, y: GetStyleHeight(Attribute.Content) /* - [ 1 ]*/);
                   EditorGUI.LabelField(commentArea, Attribute.Content, style);
 
-                  EditorGUI.DrawRect(commentArea, Attribute.Tint.WithAlpha(backgroundAlpha));
+                  EditorGUI.DrawRect(commentArea, Attribute.Tint.WithAlpha(BackgroundAlpha));
 
-                  commentArea.width = blockWidth;
+                  commentArea.width = BlockWidth;
                   commentArea.x -= commentArea.width + 1;
                   EditorGUI.DrawRect(commentArea, Attribute.Tint);
 
@@ -42,6 +42,6 @@ namespace Emp37.Utility.Editor
                   return height;
             }
 
-            private float GetStyleHeight(GUIContent content) => Mathf.Clamp(style.CalcHeight(content, EditorGUIHelper.ReleventWidth), minHeight, float.MaxValue);
+            private float GetStyleHeight(GUIContent content) => Mathf.Clamp(style.CalcHeight(content, EditorGUIHelper.ReleventWidth), MinHeight, float.MaxValue);
       }
 }

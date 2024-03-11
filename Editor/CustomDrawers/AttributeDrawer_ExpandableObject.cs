@@ -5,7 +5,7 @@ using UnityEditor;
 namespace Emp37.Utility.Editor
 {
       [CustomPropertyDrawer(typeof(ExpandableObjectAttribute))]
-      internal class ExpandableObjectAttributeDrawer : PropertyDrawer // ~Warped Imagination
+      internal class AttributeDrawer_ExpandableObject : BasePropertyDrawer // ~Warped Imagination
       {
             private UnityEditor.Editor m_Editor = null;
 

@@ -102,6 +102,5 @@ namespace Emp37.Utility
                   return null;
             }
             public static object GetValue(string name, object target, BindingFlags bindings = DEFAULT_FLAGS) => GetFieldValue(name, target, bindings) ?? GetPropertyValue(name, target, bindings) ?? GetMethodValue(name, target, bindings);
-            public static bool GetBool(string name, object target, BindingFlags bindings = DEFAULT_FLAGS) => GetValue(name, target, bindings) is bool value && value;
       }
 }

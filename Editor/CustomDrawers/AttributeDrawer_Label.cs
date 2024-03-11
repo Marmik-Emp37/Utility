@@ -5,7 +5,7 @@ using UnityEditor;
 namespace Emp37.Utility.Editor
 {
       [CustomPropertyDrawer(typeof(LabelAttribute))]
-      internal class LabelAttributeDrawer : PropertyDrawer
+      internal class AttributeDrawer_Label : BasePropertyDrawer
       {
             public override void OnPropertyDraw(Rect position, SerializedProperty property, GUIContent label)
             {

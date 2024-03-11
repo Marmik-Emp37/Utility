@@ -5,7 +5,7 @@ using UnityEditor;
 namespace Emp37.Utility.Editor
 {
       [CustomPropertyDrawer(typeof(IndentAttribute))]
-      internal class IndentAttributeDrawer : PropertyDrawer
+      internal class AttributeDrawer_Indent : BasePropertyDrawer
       {
             public override void OnPropertyDraw(Rect position, SerializedProperty property, GUIContent label)
             {

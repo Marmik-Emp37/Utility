@@ -7,8 +7,9 @@ namespace Emp37.Utility.Editor
 {
       using static ReflectionUtility;
 
-      public static class SerializedPropertyExtensions
+      public static class Extensions
       {
+            #region S E R I A L I Z E D   P R O P E R T Y
             /// <summary>
             /// Retrieves the attribute of type <typeparamref name="TAttribute"/> associated with a serialized property.
             /// </summary>
@@ -50,5 +51,6 @@ namespace Emp37.Utility.Editor
                   }
                   return false;
             }
+            #endregion
       }
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace Emp37.Utility.Editor
 {
-      internal abstract class PropertyDrawer : UnityEditor.PropertyDrawer
+      internal abstract class BasePropertyDrawer : PropertyDrawer
       {
             private bool init;
 
@@ -17,7 +17,6 @@ namespace Emp37.Utility.Editor
                   {
                         Initialize(property);
                         init = true;
-                        return;
                   }
                   using (new EditorGUI.PropertyScope(position, label, property))
                   {

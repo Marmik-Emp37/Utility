@@ -5,13 +5,10 @@ using UnityEngine;
 
 namespace Emp37.Utility
 {
-      using Object = UnityEngine.Object;
-
-
       /// <summary>
       /// Singleton manager for registering and managing MonoBehaviours.
       /// </summary>
-      public static class MonoRegistry
+      public static class MonoBehaviourRegistry
       {
             private static readonly Dictionary<Type, MonoBehaviour> database = new();
 
@@ -59,7 +56,8 @@ namespace Emp37.Utility
 
                   if (database.ContainsKey(type))
                   {
-                        Debug.LogWarning(message + "This instance already exists in the database.");
+                        Debug.LogError(message + "This instance already exists in the database.", database[type]);
+                        instance.enabled = false;
                   }
                   else
                   {

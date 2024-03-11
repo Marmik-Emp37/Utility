@@ -5,7 +5,7 @@ using UnityEditor;
 namespace Emp37.Utility.Editor
 {
       [CustomPropertyDrawer(typeof(MaxAttribute))]
-      internal class MaxAttributeDrawer : PropertyDrawer
+      internal class AttributeDrawer_Max : BasePropertyDrawer
       {
             public override void OnPropertyDraw(Rect position, SerializedProperty property, GUIContent label)
             {

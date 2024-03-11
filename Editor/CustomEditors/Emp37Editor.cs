@@ -8,6 +8,18 @@ using UnityEditor;
 
 namespace Emp37.Utility.Editor
 {
+      #region B A S E   E D I T O R S
+      [CanEditMultipleObjects, CustomEditor(typeof(MonoBehaviour), true, isFallback = true)]
+      internal class MonoBehaviourEditor : Emp37Editor
+      {
+      }
+
+      [CanEditMultipleObjects, CustomEditor(typeof(ScriptableObject), true, isFallback = true)]
+      internal class ScriptableObjectEditor : Emp37Editor
+      {
+      }
+      #endregion
+
       internal class Emp37Editor : UnityEditor.Editor
       {
             private Type targetType;
@@ -74,11 +86,17 @@ namespace Emp37.Utility.Editor
             {
                   if (property.TryGetAttribute(out EnableWhenAttribute enableWhenAttribute))
                   {
-                        return ReflectionUtility.GetBool(enableWhenAttribute.ConditionName, target);
+                        if (ReflectionUtility.GetValue(enableWhenAttribute.ConditionName, target) is bool value)
+                        {
+                              return value;
+                        }
                   }
                   if (property.TryGetAttribute(out DisableWhenAttribute disableWhenAttribute))
                   {
-                        return !ReflectionUtility.GetBool(disableWhenAttribute.ConditionName, target);
+                        if (ReflectionUtility.GetValue(disableWhenAttribute.ConditionName, target) is bool value)
+                        {
+                              return !value;
+                        }
                   }
                   return true;
             }
@@ -86,11 +104,17 @@ namespace Emp37.Utility.Editor
             {
                   if (property.TryGetAttribute(out ShowWhenAttribute showWhenAttribute))
                   {
-                        return ReflectionUtility.GetBool(showWhenAttribute.ConditionName, target);
+                        if (ReflectionUtility.GetValue(showWhenAttribute.ConditionName, target) is bool value)
+                        {
+                              return value;
+                        }
                   }
                   if (property.TryGetAttribute(out HideWhenAttribute hideWhenAttribute))
                   {
-                        return !ReflectionUtility.GetBool(hideWhenAttribute.ConditionName, target);
+                        if (ReflectionUtility.GetValue(hideWhenAttribute.ConditionName, target) is bool value)
+                        {
+                              return !value;
+                        }
                   }
                   return true;
             }

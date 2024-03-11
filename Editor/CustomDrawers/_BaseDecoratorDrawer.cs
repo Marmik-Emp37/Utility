@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Emp37.Utility.Editor
 {
-      internal abstract class DecoratorDrawer : UnityEditor.DecoratorDrawer
+      internal abstract class BaseDecoratorDrawer : UnityEditor.DecoratorDrawer
       {
             private bool init;
 
@@ -13,7 +13,6 @@ namespace Emp37.Utility.Editor
                   {
                         Initialize();
                         init = true;
-                        return;
                   }
             }
       }

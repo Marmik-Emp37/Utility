@@ -8,7 +8,7 @@ namespace Emp37.Utility.Editor
 
 
       [CustomPropertyDrawer(typeof(TitleAttribute))]
-      internal class TitleAttributeDrawer : DecoratorDrawer
+      internal class AttributeDrawer_Title : BaseDecoratorDrawer
       {
             private const float InitialGap = 8F, UnderlineHeight = 1F;
 
