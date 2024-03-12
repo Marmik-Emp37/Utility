@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace Emp37.Utility
+namespace Emp37.Utility.Singleton
 {
       /// <summary>
       /// Singleton manager for registering and managing MonoBehaviours.
@@ -51,18 +51,18 @@ namespace Emp37.Utility
                         Debug.LogWarning("Instance is null.");
                         return;
                   }
-                  var type = instance.GetType();
-                  var message = $"Unable to register instance of type '{type}': ";
+                  Type type = instance.GetType();
+                  string message = $"Unable to register Instance of type '{type}': ";
 
                   if (database.ContainsKey(type))
                   {
-                        Debug.LogError(message + "This instance already exists in the database.", database[type]);
+                        Debug.LogError(message + "This Instance already exists in the database.", database[type]);
                         instance.enabled = false;
                   }
                   else
                   {
                         database.Add(type, instance);
-                        Debug.Log($"Registered instance of type '{type.Name}'.");
+                        Debug.Log($"Registered Instance of type '{type.Name}'.");
                   }
             }
 
@@ -77,22 +77,22 @@ namespace Emp37.Utility
                         Debug.LogWarning("Instance is null.");
                         return;
                   }
-                  var type = instance.GetType();
-                  var message = $"Unable to unregister instance of type '{type}': ";
+                  Type type = instance.GetType();
+                  string message = $"Unable to unregister Instance of type '{type}': ";
 
                   if (database.ContainsKey(type))
                   {
                         if (database[type] != instance)
                         {
-                              Debug.LogWarning(message + "The provided instance does not match the registered instance.");
+                              Debug.LogWarning(message + "The provided Instance does not match the registered Instance.");
                               return;
                         }
                         database.Remove(type);
-                        Debug.Log($"Unregistered instance of type '{type.Name}'.");
+                        Debug.Log($"Unregistered Instance of type '{type.Name}'.");
                   }
                   else
                   {
-                        Debug.LogWarning(message + "This instance does not exist in the database.");
+                        Debug.LogWarning(message + "This Instance does not exist in the database.");
                   }
             }
 
@@ -103,7 +103,7 @@ namespace Emp37.Utility
             {
                   foreach (var key in database.Keys)
                   {
-                        Debug.Log($"Unregistering instance of type '{key.FullName}'.");
+                        Debug.Log($"Unregistering Instance of type '{key.FullName}'.");
                   }
                   database.Clear();
                   Debug.Log("Registry Wiped!");
