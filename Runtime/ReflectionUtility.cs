@@ -6,6 +6,15 @@ namespace Emp37.Utility
 {
       public static class ReflectionUtility
       {
+            [Flags]
+            public enum MemberType
+            {
+                  Field = 1,
+                  Property = 2,
+                  Method = 4,
+                  All = 7,
+            }
+
             public const BindingFlags DEFAULT_FLAGS = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
             private static readonly Dictionary<(Type, string), FieldInfo> cachedFieldInfo = new();
@@ -30,6 +39,7 @@ namespace Emp37.Utility
                               if (field != null)
                               {
                                     cachedFieldInfo[key] = field;
+                                    break;
                               }
                               type = type.BaseType;
                         }
@@ -49,6 +59,7 @@ namespace Emp37.Utility
                               if (property != null)
                               {
                                     cachedPropertyInfo[key] = property;
+                                    break;
                               }
                               type = type.BaseType;
                         }
@@ -68,6 +79,7 @@ namespace Emp37.Utility
                               if (method != null)
                               {
                                     cachedMethodInfo[key] = method;
+                                    break;
                               }
                               type = type.BaseType;
                         }
@@ -101,6 +113,29 @@ namespace Emp37.Utility
                   }
                   return null;
             }
-            public static object GetValue(string name, object target, BindingFlags bindings = DEFAULT_FLAGS) => GetFieldValue(name, target, bindings) ?? GetPropertyValue(name, target, bindings) ?? GetMethodValue(name, target, bindings);
+            public static object GetValue(string name, object target, BindingFlags bindings = DEFAULT_FLAGS, MemberType allowedTypes = MemberType.All)
+            {
+                  object value = null;
+
+                  if (allowedTypes.HasFlag(MemberType.Field))
+                  {
+                        value = GetFieldValue(name, target, bindings);
+                        if (value != null) return value;
+                  }
+
+                  if (allowedTypes.HasFlag(MemberType.Property))
+                  {
+                        value = GetPropertyValue(name, target, bindings);
+                        if (value != null) return value;
+                  }
+
+                  if (allowedTypes.HasFlag(MemberType.Method))
+                  {
+                        value = GetMethodValue(name, target, bindings);
+                        if (value != null) return value;
+                  }
+
+                  return value;
+            }
       }
 }

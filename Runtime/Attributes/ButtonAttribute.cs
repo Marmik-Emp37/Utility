@@ -7,14 +7,23 @@ namespace Emp37.Utility
       /// <summary>
       /// Attribute for drawing a button in the inspector.
       /// </summary>
-      [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
+      [AttributeUsage(AttributeTargets.Method)]
       public class ButtonAttribute : PropertyAttribute
       {
-            public readonly string Text;
+            public readonly float Height = 21F;
+            public readonly string[] Parameters = null;
 
-            // size
-            // show only at runtime functionality
-
-            public ButtonAttribute(string text) => Text = text;
+            public ButtonAttribute()
+            {
+            }
+            public ButtonAttribute(Size size) => Height = size switch
+            {
+                  Size.Small => 18F,
+                  Size.Medium => 27F,
+                  Size.Large => 36F,
+                  _ => Height,
+            };
+            /// <param name="parameters">The method parameter name(s) as Field or Property within this type.</param>
+            public ButtonAttribute(Size size, params string[] parameters) : this(size) => Parameters = parameters;
       }
 }

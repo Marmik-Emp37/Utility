@@ -13,6 +13,10 @@ namespace Emp37.Utility
             public readonly float Value;
 
             /// <param name="value">The maximum allowed value.</param>
-            public MaxAttribute(float value) => Value = value;
+            public MaxAttribute(float value)
+            {
+                  Value = value;
+                  order = -1;
+            }
       }
 }

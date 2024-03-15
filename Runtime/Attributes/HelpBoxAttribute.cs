@@ -13,6 +13,6 @@ namespace Emp37.Utility
 
             public HelpBoxAttribute(string message) => Message = message;
             public HelpBoxAttribute(string message, MessageType type) : this(message) => MessageType = type;
-            public HelpBoxAttribute(string message, MessageType type, Size size) : this(message, type) => Height = size switch { Size.Small => 32F, Size.Large => 64F, _ => 48F };
+            public HelpBoxAttribute(string message, MessageType type, Size size) : this(message, type) => Height = size switch { Size.Small => 32F, Size.Medium => 48F, Size.Large => 64F, _ => Height };
       }
 }
