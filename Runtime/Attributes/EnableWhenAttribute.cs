@@ -7,7 +7,7 @@ namespace Emp37.Utility
       /// <summary>
       /// Attribute to conditionally enable the associated field in the Inspector.
       /// </summary>
-      [AttributeUsage(AttributeTargets.Field)]
+      [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
       public class EnableWhenAttribute : Attribute
       {
             public readonly string ConditionName;

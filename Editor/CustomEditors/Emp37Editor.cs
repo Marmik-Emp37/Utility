@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 using UnityEngine;
 
 using UnityEditor;
-using System.Linq;
-using UnityEditor.PackageManager;
-using System.Security.Cryptography;
-using Unity.Plastic.Newtonsoft.Json.Linq;
 
 namespace Emp37.Utility.Editor
 {
@@ -44,7 +41,7 @@ namespace Emp37.Utility.Editor
                   targetType = target.GetType();
                   shouldHideDefaultScript = targetType.IsDefined(typeof(HideDefaultScriptAttribute));
 
-                  #region F E T C H   P R O P E R T I E S
+                  #region I N I T I A L I Z E   P R O P E R T I E S
                   if (serializedProperties == null)
                   {
                         var properties = new List<SerializedProperty>();
@@ -66,7 +63,9 @@ namespace Emp37.Utility.Editor
                   }
                   #endregion
 
+                  #region I N I T I A L I Z E   M E T H O D S
                   methods = targetType.GetMethods(DEFAULT_FLAGS);
+                  #endregion
             }
             public override void OnInspectorGUI()
             {
@@ -83,67 +82,59 @@ namespace Emp37.Utility.Editor
                         #region O T H E R   P R O P E R T I E S
                         foreach (var property in serializedProperties)
                         {
-                              if (!EvaluateVisibility(property)) continue;
+                              var field = FetchFieldInfo(property.name, targetType);
+                              if (!EvaluateVisibility(field)) continue;
 
-                              GUI.enabled = EvaluateEnabled(property);
+                              GUI.enabled = EvaluateEnabled(field);
                               EditorGUILayout.PropertyField(property);
+                        }
+                        #endregion
+
+                        #region B U T T O N S
+                        foreach (var method in methods)
+                        {
+                              if (!EvaluateVisibility(method)) continue;
+
+                              GUI.enabled = EvaluateEnabled(method);
+                              var button = method.GetCustomAttribute<ButtonAttribute>();
+                              if (button != null)
+                              {
+                                    DrawButton(button, method);
+                              }
                         }
                         #endregion
 
                         GUI.enabled = true;
                   }
                   serializedObject.ApplyModifiedProperties();
-
-                  foreach (var method in methods)
-                  {
-                        var button = method.GetCustomAttribute<ButtonAttribute>();
-                        if (button != null) DrawButton(button, method);
-                  }
             }
 
-            private bool EvaluateEnabled(SerializedProperty property)
+            private bool EvaluateVisibility(MemberInfo member)
             {
-                  if (property.TryGetAttribute(out EnableWhenAttribute enableWhenAttribute))
-                  {
-                        if (GetValue(enableWhenAttribute.ConditionName, target) is bool value)
-                        {
-                              return value;
-                        }
-                  }
-                  if (property.TryGetAttribute(out DisableWhenAttribute disableWhenAttribute))
-                  {
-                        if (GetValue(disableWhenAttribute.ConditionName, target) is bool value)
-                        {
-                              return !value;
-                        }
-                  }
+                  var showWhen = member.GetCustomAttribute<ShowWhenAttribute>();
+                  if (showWhen != null) if (GetValue(showWhen.ConditionName, target) is bool value) return value;
+
+                  var hideWhen = member.GetCustomAttribute<HideWhenAttribute>();
+                  if (hideWhen != null) if (GetValue(hideWhen.ConditionName, target) is bool value) return !value;
+
                   return true;
             }
-            private bool EvaluateVisibility(SerializedProperty property)
+            private bool EvaluateEnabled(MemberInfo member)
             {
-                  if (property.TryGetAttribute(out ShowWhenAttribute showWhenAttribute))
-                  {
-                        if (GetValue(showWhenAttribute.ConditionName, target) is bool value)
-                        {
-                              return value;
-                        }
-                  }
-                  if (property.TryGetAttribute(out HideWhenAttribute hideWhenAttribute))
-                  {
-                        if (GetValue(hideWhenAttribute.ConditionName, target) is bool value)
-                        {
-                              return !value;
-                        }
-                  }
+                  var enableWhen = member.GetCustomAttribute<EnableWhenAttribute>();
+                  if (enableWhen != null) if (GetValue(enableWhen.ConditionName, target) is bool value) return value;
+
+                  var disableWhen = member.GetCustomAttribute<DisableWhenAttribute>();
+                  if (disableWhen != null) if (GetValue(disableWhen.ConditionName, target) is bool value) return !value;
+
                   return true;
             }
 
             private void DrawButton(ButtonAttribute button, MethodInfo method)
             {
-                  if (!GUILayout.Button(method.Name, GUILayout.Height(button.Height)))
-                  {
-                        return;
-                  }
+                  GUI.backgroundColor = ColorLibrary.Pick(button.Shade);
+
+                  if (!GUILayout.Button(method.Name, GUILayout.Height(button.Height))) return;
 
                   List<object> values = new();
                   ParameterInfo[] parameters = method.GetParameters();

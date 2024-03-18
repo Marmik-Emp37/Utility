@@ -1,13 +1,11 @@
 using System;
 
-using UnityEngine;
-
 namespace Emp37.Utility
 {
       /// <summary>
       /// Attribute to conditionally disable the associated field in the Inspector.
       /// </summary>
-      [AttributeUsage(AttributeTargets.Field)]
+      [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
       public class DisableWhenAttribute : Attribute
       {
             public readonly string ConditionName;
