@@ -122,13 +122,11 @@ namespace Emp37.Utility
                         value = GetFieldValue(name, target, bindings);
                         if (value != null) return value;
                   }
-
                   if (allowedTypes.HasFlag(MemberType.Property))
                   {
                         value = GetPropertyValue(name, target, bindings);
                         if (value != null) return value;
                   }
-
                   if (allowedTypes.HasFlag(MemberType.Method))
                   {
                         value = GetMethodValue(name, target, bindings);

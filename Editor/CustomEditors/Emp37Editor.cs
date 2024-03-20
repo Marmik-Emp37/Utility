@@ -79,7 +79,7 @@ namespace Emp37.Utility.Editor
                         }
                         #endregion
 
-                        #region O T H E R   P R O P E R T I E S
+                        #region S E R I A L I Z E D   P R O P E R T I E S
                         foreach (var property in serializedProperties)
                         {
                               var field = FetchFieldInfo(property.name, targetType);
@@ -134,41 +134,42 @@ namespace Emp37.Utility.Editor
             {
                   GUI.backgroundColor = ColorLibrary.Pick(button.Shade);
 
-                  if (!GUILayout.Button(method.Name, GUILayout.Height(button.Height))) return;
-
-                  List<object> values = new();
-                  ParameterInfo[] parameters = method.GetParameters();
-
-                  if (parameters.Length > 0)
+                  if (GUILayout.Button(method.Name, GUILayout.Height(button.Height)))
                   {
-                        string[] paramNames = button.Parameters;
+                        List<object> values = new();
+                        ParameterInfo[] parameters = method.GetParameters();
 
-                        Assert(paramNames != null && paramNames.Length == parameters.Length, "Number of parameters specified does not match the expected number.");
-
-                        for (byte i = 0; i < parameters.Length; i++)
+                        if (parameters.Length > 0)
                         {
-                              object value = GetValue(paramNames[i], target, allowedTypes: MemberType.Field | MemberType.Property);
+                              string[] paramNames = button.Parameters;
 
-                              Assert(value != null, $"Unable to fetch value for '{paramNames[i]}' in type '{targetType.FullName}'. The member may not exist or may not be accessible.");
+                              Assert(paramNames != null && paramNames.Length == parameters.Length, "Number of parameters specified does not match the expected number.");
 
-                              Type expectedType = parameters[i].ParameterType, parameterType = value.GetType();
+                              for (byte i = 0; i < parameters.Length; i++)
+                              {
+                                    object value = GetValue(paramNames[i], target, allowedTypes: MemberType.Field | MemberType.Property);
 
-                              Assert(expectedType == parameterType, $"Parameter type mismatch at index {i}. Expected type '{expectedType}' but recieved '{parameterType}'.");
+                                    Assert(value != null, $"Unable to fetch value for '{paramNames[i]}' in type '{targetType.FullName}'. The member may not exist or may not be accessible.");
 
-                              values.Add(value);
+                                    Type expectedType = parameters[i].ParameterType, parameterType = value.GetType();
+
+                                    Assert(expectedType == parameterType, $"Parameter type mismatch at index {i}. Expected type '{expectedType}' but recieved '{parameterType}'.");
+
+                                    values.Add(value);
+                              }
+
+                              void Assert(bool condition, string message)
+                              {
+                                    if (condition) return;
+
+                                    string attribute = nameof(ButtonAttribute);
+                                    string signature = $"{targetType}.{method.Name}({string.Join(", ", parameters.Select(param => param.ParameterType.Name))})";
+
+                                    throw new ArgumentException($"Couldn't invoke method with [{attribute}] in '{signature}'.\n{message}");
+                              }
                         }
-
-                        void Assert(bool condition, string message)
-                        {
-                              if (condition) return;
-
-                              string attribute = nameof(ButtonAttribute);
-                              string signature = $"{targetType}.{method.Name}({string.Join(", ", parameters.Select(param => param.ParameterType.Name))})";
-
-                              throw new ArgumentException($"Couldn't invoke method with [{attribute}] in '{signature}'.\n{message}");
-                        }
+                        method.Invoke(target, values.ToArray());
                   }
-                  method.Invoke(target, values.ToArray());
             }
       }
 }
