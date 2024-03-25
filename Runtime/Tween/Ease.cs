@@ -1,3 +1,4 @@
+using System;
 using static System.MathF;
 
 namespace Emp37.Utility.Tween
@@ -281,7 +282,7 @@ namespace Emp37.Utility.Tween
             }
 
             // E L A S T I C
-            private const float Elastic = PI / 0.5F / 0.3F;
+            private const float Elastic = 2F * PI / 0.3F;
 
             private static float EaseInElastic(float x, float overshoot)
             {
@@ -313,16 +314,16 @@ namespace Emp37.Utility.Tween
 
                   float p = 0.3F;
                   float s;
-                  float a = 0f;
+                  float a = 0F;
 
-                  if (a == 0f || a < Abs(1F))
+                  if (a == 1F)
                   {
-                        a = 1F;
-                        s = p / 4f;
+                        s = p / (2F * PI) * Asin(1F / a);
                   }
                   else
                   {
-                        s = p / (2f * PI) * Asin(1F / a);
+                        a = 1F;
+                        s = p / 4f;
                   }
 
                   if (overshoot > 1F)
@@ -331,19 +332,24 @@ namespace Emp37.Utility.Tween
                         {
                               overshoot = 1F + (x / 0.2F * (overshoot - 1F));
                         }
-                        else if (x > 0.8F)
+                        else
+                        if (x > 0.8F)
                         {
                               overshoot = 1F + ((1F - x) / 0.2F * (overshoot - 1F));
                         }
                   }
 
-                  if (x < 1f)
+
+                  if (x < 1F)
                   {
                         x--;
-                        return 0F - 0.5F * (a * Pow(2F, 10F * x) * Sin((x - s) * (2F * PI) / p)) * overshoot;
+                        return -0.5F * (a * Pow(2F, 10F * x) * Sin((x - s) * Elastic)) * overshoot;
                   }
-                  x--;
-                  return 1F + 0F + a * Pow(2F, -10F * x) * Sin((x - s) * (2F * PI) / p) * 0.5F * overshoot;
+                  else
+                  {
+                        x--;
+                        return 1F + a * Pow(2F, -10F * x) * Sin((x - s) * Elastic) * 0.5F * overshoot;
+                  }
             }
 
             // C U S T O M
