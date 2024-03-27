@@ -7,7 +7,7 @@ namespace Emp37.Utility.Editor
       using static ColorLibrary;
 
 
-      [CustomPropertyDrawer(typeof(TitleAttribute))]
+      [CustomPropertyDrawer(typeof(TitleAttribute), true)]
       internal class AttributeDrawer_Title : BaseDecoratorDrawer
       {
             private const float InitialGap = 8F, UnderlineHeight = 1F;

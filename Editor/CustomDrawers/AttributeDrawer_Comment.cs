@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace Emp37.Utility.Editor
 {
-      [CustomPropertyDrawer(typeof(CommentAttribute))]
+      [CustomPropertyDrawer(typeof(CommentAttribute), true)]
       internal class AttributeDrawer_Comment : BasePropertyDrawer
       {
             private const byte BackgroundAlpha = 25;

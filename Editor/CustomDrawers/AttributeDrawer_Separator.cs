@@ -6,7 +6,7 @@ namespace Emp37.Utility.Editor
 {
       using static EditorGUIUtility;
 
-      [CustomPropertyDrawer(typeof(SeparatorAttribute))]
+      [CustomPropertyDrawer(typeof(SeparatorAttribute), true)]
       internal class AttributeDrawer_Separator : BaseDecoratorDrawer
       {
             private SeparatorAttribute Attribute => attribute as SeparatorAttribute;

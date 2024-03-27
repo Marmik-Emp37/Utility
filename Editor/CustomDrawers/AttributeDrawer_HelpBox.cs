@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace Emp37.Utility.Editor
 {
-      [CustomPropertyDrawer(typeof(HelpBoxAttribute))]
+      [CustomPropertyDrawer(typeof(HelpBoxAttribute), true)]
       internal class AttributeDrawer_HelpBox : BaseDecoratorDrawer
       {
             private const float BoxOffset = -4F, TextOffset = 34F;
